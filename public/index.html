@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5e900"><title>Éxito | Portal de recursos</title>
+<link rel="stylesheet" href="/css/styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/js/config.js"></script><script src="/js/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#inicio" data-view="inicio"><span class="brand-logo">éxito</span><span class="brand-sub">PORTAL DE RECURSOS</span></a>
+    <p class="nav-caption">ESPACIO DE TRABAJO</p>
+    <nav>
+      <button class="nav-link active" data-view="inicio"><span>⌂</span>Inicio</button>
+      <button class="nav-link" data-view="galeria"><span>▧</span>Galería de imágenes</button>
+      <button class="nav-link" data-view="documentos"><span>▤</span>Documentos</button>
+      <button class="nav-link" data-view="categorias"><span>▦</span>Categorías</button>
+      <button class="nav-link" data-view="admin"><span>↑</span>Subir archivos</button>
+    </nav>
+    <div class="sidebar-foot"><span class="live-dot"></span><div><b>Modo local</b><small>Archivos guardados en este equipo</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
+      <div class="crumb"><span>Éxito</span><span>/</span><b id="crumbTitle">Inicio</b></div>
+      <div class="top-actions"><span class="local-pill">● LOCAL</span><span class="avatar">AD</span></div>
+    </header>
+    <div class="content">
+      <section class="view active" id="view-inicio">
+        <div class="hero">
+          <div class="hero-copy"><p class="eyebrow">PORTAL INTERNO · RECURSOS COMPARTIDOS</p><h1>Todo lo que necesitas,<br><em>en un solo lugar.</em></h1><p>Consulta imágenes y documentos de la empresa desde una biblioteca organizada y fácil de explorar.</p><button class="yellow-button" data-view="documentos">Explorar biblioteca <span>→</span></button></div>
+          <div class="hero-art" aria-hidden="true"><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="hero-word">éxito<span>!</span></div><div class="hero-label">RECURSOS<br>DE EMPRESA</div></div>
+        </div>
+        <form class="search" id="globalSearch"><span>⌕</span><input id="globalQuery" type="search" placeholder="Busca por nombre, tipo o categoría..." aria-label="Buscar recursos"><button>Buscar</button></form>
+        <div class="section-title"><div><small>EXPLORAR</small><h2>Acceso rápido</h2></div></div>
+        <div class="quick-grid">
+          <button class="quick-card yellow" data-view="galeria"><span class="quick-symbol">▧</span><b>Galería de imágenes</b><small>Material visual y recursos gráficos</small><span class="arrow">↗</span></button>
+          <button class="quick-card" data-view="documentos"><span class="quick-symbol red">▤</span><b>Biblioteca documental</b><small>PDF y archivos de consulta</small><span class="arrow">↗</span></button>
+          <button class="quick-card" data-view="categorias"><span class="quick-symbol olive">▦</span><b>Categorías</b><small>Recursos organizados por tema</small><span class="arrow">↗</span></button>
+        </div>
+        <div class="section-title section-spaced"><div><small>ÚLTIMOS RECURSOS</small><h2>Contenido reciente</h2></div><button class="plain-link" data-view="documentos">Ver biblioteca →</button></div>
+        <div id="recentFiles" class="file-list"></div>
+      </section>
+      <section class="view" id="view-galeria">
+        <div class="page-head"><div><p class="eyebrow">RECURSOS VISUALES</p><h1>Galería de imágenes</h1><p>Imágenes guardadas en la biblioteca local.</p></div></div>
+        <div class="toolbar"><div class="search inline-search"><span>⌕</span><input id="galleryQuery" placeholder="Buscar imágenes..." type="search"></div><select id="galleryCategory"><option value="">Todas las categorías</option></select></div>
+        <div class="gallery-grid" id="galleryGrid"></div><p class="empty hidden" id="galleryEmpty">No hay imágenes que coincidan con la búsqueda.</p>
+      </section>
+      <section class="view" id="view-documentos">
+        <div class="page-head"><div><p class="eyebrow">BIBLIOTECA</p><h1>Documentos</h1><p>Consulta los archivos disponibles en el equipo.</p></div></div>
+        <div class="toolbar"><div class="search inline-search"><span>⌕</span><input id="documentQuery" placeholder="Buscar documentos..." type="search"></div><select id="documentCategory"><option value="">Todas las categorías</option></select></div>
+        <div id="documentList" class="file-list"></div><p class="empty hidden" id="documentEmpty">No hay documentos que coincidan con la búsqueda.</p>
+      </section>
+      <section class="view" id="view-categorias">
+        <div class="page-head"><div><p class="eyebrow">ORGANIZACIÓN</p><h1>Categorías</h1><p>Encuentra los recursos según el tema.</p></div></div>
+        <div id="categoryGrid" class="category-grid"></div>
+      </section>
+      <section class="view" id="view-admin">
+        <div class="page-head"><div><p class="eyebrow">GESTIÓN DE CONTENIDO</p><h1>Subir archivos</h1><p>Añade imágenes o PDF a la biblioteca que se guarda en este equipo.</p></div></div>
+        <div class="notice"><b>Prototipo local:</b> los archivos se guardan en la carpeta storage/uploads y sus datos en SQLite. Esta aplicación está configurada para uso local, no para exponerla a internet.</div>
+        <div class="admin-grid">
+          <form id="uploadForm" class="panel">
+            <h2>Nuevo recurso</h2><p class="muted">Formatos permitidos: JPG, PNG, WebP, GIF y PDF. Máximo 15 MB.</p>
+            <label class="dropzone" for="fileInput"><span class="upload-icon">↑</span><b>Selecciona un archivo</b><small>Elige una imagen o un PDF desde tu equipo</small><input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf" required></label>
+            <label class="field">Nombre visible<input id="fileTitle" name="title" maxlength="120" placeholder="Ej. Manual de identidad"></label>
+            <label class="field">Categoría<select id="uploadCategory" required></select></label>
+            <button class="primary-button" type="submit">Guardar archivo</button><p id="uploadStatus" class="form-status" aria-live="polite"></p>
+          </form>
+          <form id="categoryForm" class="panel">
+            <h2>Nueva categoría</h2><p class="muted">Crea apartados según las necesidades del portal.</p>
+            <label class="field">Nombre<input id="newCategoryName" maxlength="120" placeholder="Ej. Recursos de capacitación" required></label>
+            <label class="field">Descripción<input id="newCategoryDescription" maxlength="240" placeholder="¿Qué contiene esta categoría?"></label>
+            <button class="secondary-button" type="submit">Crear categoría</button><p id="categoryStatus" class="form-status" aria-live="polite"></p>
+            <div class="admin-summary"><span>Archivos permitidos</span><b>Imágenes + PDF</b><span>Almacenamiento</span><b>Local persistente</b></div>
+          </form>
+        </div>
+        <div class="section-title section-spaced"><div><small>BIBLIOTECA LOCAL</small><h2>Gestionar archivos</h2></div></div>
+        <div id="adminFileList" class="file-list"></div>
+      </section>
+    </div>
+    <footer class="footer"><span>Éxito · Portal de recursos</span><span>Prototipo funcional local</span></footer>
+  </main>
+</div>
+<div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><button id="modalClose" class="modal-close" aria-label="Cerrar">×</button><div id="modalBody"></div></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>
