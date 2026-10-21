@@ -1,86 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f5e900"><title>Éxito | Portal de recursos</title>
-<link rel="stylesheet" href="/css/styles.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/js/config.js"></script><script src="/js/app.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal Éxito: documentos, imágenes y recursos organizados en un solo lugar.">
+  <title>Portal Éxito</title>
+  <style>
+    :root {
+      --yellow: #ffd500;
+      --red: #e31837;
+      --black: #222;
+      --gray: #666;
+      --light: #f7f7f7;
+      --border: #e7e7e7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--black);
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    .container { width: min(1000px, calc(100% - 36px)); margin: 0 auto; }
+    header { background: var(--yellow); border-bottom: 1px solid #e6c100; }
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .logo {
+      color: var(--black);
+      text-decoration: none;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .logo span { color: var(--red); }
+    .nav a.button { background: var(--red); color: #fff; }
+    .button {
+      display: inline-block;
+      padding: 11px 18px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: .95rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .button:hover { opacity: .9; }
+    .hero { padding: 68px 0 62px; background: var(--light); border-bottom: 1px solid var(--border); }
+    .hero h1 { max-width: 680px; margin: 0 0 16px; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; }
+    .hero p { max-width: 650px; margin: 0 0 24px; color: var(--gray); font-size: 1.05rem; }
+    .button.primary { background: var(--red); color: #fff; }
+    .button.secondary { background: #fff; color: var(--black); border-color: #ccc; margin-left: 8px; }
+    section { padding: 52px 0; }
+    .section-title { margin: 0 0 10px; font-size: 1.8rem; }
+    .section-intro { margin: 0 0 26px; color: var(--gray); max-width: 700px; }
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .card { border: 1px solid var(--border); border-radius: 8px; padding: 24px; background: #fff; }
+    .card h3 { margin: 0 0 10px; font-size: 1.25rem; }
+    .card p { margin: 0; color: var(--gray); }
+    .values { background: var(--light); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .value-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .value { padding: 18px; background: #fff; border: 1px solid var(--border); border-radius: 6px; }
+    .value h3 { margin: 0 0 6px; font-size: 1rem; }
+    .value p { margin: 0; color: var(--gray); font-size: .93rem; }
+    .final-cta { text-align: center; }
+    .final-cta p { color: var(--gray); margin: 0 auto 20px; max-width: 600px; }
+    footer { padding: 20px 0; background: #222; color: #fff; font-size: .9rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; }
+    footer p { margin: 0; color: #ccc; }
+    @media (max-width: 650px) {
+      .nav { min-height: 64px; }
+      .hero { padding: 48px 0; }
+      .cards, .value-list { grid-template-columns: 1fr; }
+      section { padding: 40px 0; }
+      .button.secondary { margin: 10px 0 0; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#inicio" data-view="inicio"><span class="brand-logo">éxito</span><span class="brand-sub">PORTAL DE RECURSOS</span></a>
-    <p class="nav-caption">ESPACIO DE TRABAJO</p>
-    <nav>
-      <button class="nav-link active" data-view="inicio"><span>⌂</span>Inicio</button>
-      <button class="nav-link" data-view="galeria"><span>▧</span>Galería de imágenes</button>
-      <button class="nav-link" data-view="documentos"><span>▤</span>Documentos</button>
-      <button class="nav-link" data-view="categorias"><span>▦</span>Categorías</button>
-      <button class="nav-link" data-view="admin"><span>↑</span>Subir archivos</button>
-    </nav>
-    <div class="sidebar-foot"><span class="live-dot"></span><div><b>Modo local</b><small>Archivos guardados en este equipo</small></div></div>
-  </aside>
-  <main class="main">
-    <header class="topbar">
-      <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
-      <div class="crumb"><span>Éxito</span><span>/</span><b id="crumbTitle">Inicio</b></div>
-      <div class="top-actions"><span class="local-pill">● LOCAL</span><span class="avatar">AD</span></div>
-    </header>
-    <div class="content">
-      <section class="view active" id="view-inicio">
-        <div class="hero">
-          <div class="hero-copy"><p class="eyebrow">PORTAL INTERNO · RECURSOS COMPARTIDOS</p><h1>Todo lo que necesitas,<br><em>en un solo lugar.</em></h1><p>Consulta imágenes y documentos de la empresa desde una biblioteca organizada y fácil de explorar.</p><button class="yellow-button" data-view="documentos">Explorar biblioteca <span>→</span></button></div>
-          <div class="hero-art" aria-hidden="true"><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="hero-word">éxito<span>!</span></div><div class="hero-label">RECURSOS<br>DE EMPRESA</div></div>
-        </div>
-        <form class="search" id="globalSearch"><span>⌕</span><input id="globalQuery" type="search" placeholder="Busca por nombre, tipo o categoría..." aria-label="Buscar recursos"><button>Buscar</button></form>
-        <div class="section-title"><div><small>EXPLORAR</small><h2>Acceso rápido</h2></div></div>
-        <div class="quick-grid">
-          <button class="quick-card yellow" data-view="galeria"><span class="quick-symbol">▧</span><b>Galería de imágenes</b><small>Material visual y recursos gráficos</small><span class="arrow">↗</span></button>
-          <button class="quick-card" data-view="documentos"><span class="quick-symbol red">▤</span><b>Biblioteca documental</b><small>PDF y archivos de consulta</small><span class="arrow">↗</span></button>
-          <button class="quick-card" data-view="categorias"><span class="quick-symbol olive">▦</span><b>Categorías</b><small>Recursos organizados por tema</small><span class="arrow">↗</span></button>
-        </div>
-        <div class="section-title section-spaced"><div><small>ÚLTIMOS RECURSOS</small><h2>Contenido reciente</h2></div><button class="plain-link" data-view="documentos">Ver biblioteca →</button></div>
-        <div id="recentFiles" class="file-list"></div>
-      </section>
-      <section class="view" id="view-galeria">
-        <div class="page-head"><div><p class="eyebrow">RECURSOS VISUALES</p><h1>Galería de imágenes</h1><p>Imágenes guardadas en la biblioteca local.</p></div></div>
-        <div class="toolbar"><div class="search inline-search"><span>⌕</span><input id="galleryQuery" placeholder="Buscar imágenes..." type="search"></div><select id="galleryCategory"><option value="">Todas las categorías</option></select></div>
-        <div class="gallery-grid" id="galleryGrid"></div><p class="empty hidden" id="galleryEmpty">No hay imágenes que coincidan con la búsqueda.</p>
-      </section>
-      <section class="view" id="view-documentos">
-        <div class="page-head"><div><p class="eyebrow">BIBLIOTECA</p><h1>Documentos</h1><p>Consulta los archivos disponibles en el equipo.</p></div></div>
-        <div class="toolbar"><div class="search inline-search"><span>⌕</span><input id="documentQuery" placeholder="Buscar documentos..." type="search"></div><select id="documentCategory"><option value="">Todas las categorías</option></select></div>
-        <div id="documentList" class="file-list"></div><p class="empty hidden" id="documentEmpty">No hay documentos que coincidan con la búsqueda.</p>
-      </section>
-      <section class="view" id="view-categorias">
-        <div class="page-head"><div><p class="eyebrow">ORGANIZACIÓN</p><h1>Categorías</h1><p>Encuentra los recursos según el tema.</p></div></div>
-        <div id="categoryGrid" class="category-grid"></div>
-      </section>
-      <section class="view" id="view-admin">
-        <div class="page-head"><div><p class="eyebrow">GESTIÓN DE CONTENIDO</p><h1>Subir archivos</h1><p>Añade imágenes o PDF a la biblioteca que se guarda en este equipo.</p></div></div>
-        <div class="notice"><b>Prototipo local:</b> los archivos se guardan en la carpeta storage/uploads y sus datos en SQLite. Esta aplicación está configurada para uso local, no para exponerla a internet.</div>
-        <div class="admin-grid">
-          <form id="uploadForm" class="panel">
-            <h2>Nuevo recurso</h2><p class="muted">Formatos permitidos: JPG, PNG, WebP, GIF y PDF. Máximo 15 MB.</p>
-            <label class="dropzone" for="fileInput"><span class="upload-icon">↑</span><b>Selecciona un archivo</b><small>Elige una imagen o un PDF desde tu equipo</small><input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif,application/pdf" required></label>
-            <label class="field">Nombre visible<input id="fileTitle" name="title" maxlength="120" placeholder="Ej. Manual de identidad"></label>
-            <label class="field">Categoría<select id="uploadCategory" required></select></label>
-            <button class="primary-button" type="submit">Guardar archivo</button><p id="uploadStatus" class="form-status" aria-live="polite"></p>
-          </form>
-          <form id="categoryForm" class="panel">
-            <h2>Nueva categoría</h2><p class="muted">Crea apartados según las necesidades del portal.</p>
-            <label class="field">Nombre<input id="newCategoryName" maxlength="120" placeholder="Ej. Recursos de capacitación" required></label>
-            <label class="field">Descripción<input id="newCategoryDescription" maxlength="240" placeholder="¿Qué contiene esta categoría?"></label>
-            <button class="secondary-button" type="submit">Crear categoría</button><p id="categoryStatus" class="form-status" aria-live="polite"></p>
-            <div class="admin-summary"><span>Archivos permitidos</span><b>Imágenes + PDF</b><span>Almacenamiento</span><b>Local persistente</b></div>
-          </form>
-        </div>
-        <div class="section-title section-spaced"><div><small>BIBLIOTECA LOCAL</small><h2>Gestionar archivos</h2></div></div>
-        <div id="adminFileList" class="file-list"></div>
-      </section>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#">Portal <span>Éxito</span></a>
+      <!-- Cambia /portal/ por la URL de tu portal si está desplegado por separado. -->
+      <a class="button" style="background:#222;color:#fff" href="portal.html">Entrar al portal</a>
     </div>
-    <footer class="footer"><span>Éxito · Portal de recursos</span><span>Prototipo funcional local</span></footer>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Bienvenido al Portal Éxito</h1>
+        <p>Un espacio para consultar documentos, imágenes y recursos de manera sencilla y organizada. Encuentra la información que necesitas en un solo lugar.</p>
+        <a class="button primary" href="/portal/">Entrar al portal</a>
+        <a class="button secondary" href="#mision">Conocer más</a>
+      </div>
+    </section>
+
+    <section id="mision">
+      <div class="container">
+        <h2 class="section-title">Misión y visión</h2>
+        <p class="section-intro">El portal busca facilitar la consulta y organización de la información para que los recursos sean más fáciles de encontrar y utilizar.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Misión</h3>
+            <p>Centralizar documentos, imágenes y recursos informativos en un espacio digital fácil de utilizar, que facilite el acceso y contribuya a una mejor organización de la información.</p>
+          </article>
+          <article class="card">
+            <h3>Visión</h3>
+            <p>Consolidarse como un punto de consulta práctico y accesible, que permita encontrar la información de forma rápida y que pueda mejorar de acuerdo con las necesidades de sus usuarios.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="values">
+      <div class="container">
+        <h2 class="section-title">¿Qué ofrece el portal?</h2>
+        <p class="section-intro">Sus principales funciones están pensadas para mantener los recursos organizados y facilitar su consulta.</p>
+        <div class="value-list">
+          <article class="value">
+            <h3>Documentos</h3>
+            <p>Consulta archivos y documentos desde un mismo espacio.</p>
+          </article>
+          <article class="value">
+            <h3>Galería de imágenes</h3>
+            <p>Visualiza imágenes organizadas para encontrarlas con facilidad.</p>
+          </article>
+          <article class="value">
+            <h3>Categorías</h3>
+            <p>Clasifica los recursos y encuentra contenido de forma más ordenada.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container">
+        <h2 class="section-title">Ingresa al portal</h2>
+        <p>Accede a los documentos, imágenes y recursos disponibles.</p>
+        <a class="button primary" href="/portal/">Entrar al portal</a>
+      </div>
+    </section>
   </main>
-</div>
-<div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><button id="modalClose" class="modal-close" aria-label="Cerrar">×</button><div id="modalBody"></div></div></div>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
-</body></html>
+
+  <footer>
+    <div class="container footer-inner">
+      <strong>Portal Éxito</strong>
+      <p>Información organizada en un solo lugar.</p>
+    </div>
+  </footer>
+</body>
+</html>
