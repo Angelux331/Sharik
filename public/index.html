@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portal Éxito: documentos, imágenes y recursos organizados en un solo lugar.">
-  <title>Portal Éxito</title>
+  <meta name="description" content="Grupo Éxito S.A. Trabajamos para que el cliente regrese. Conoce nuestra misión, visión, objetivos, valores y compromiso.">
+  <title>Grupo Éxito S.A. | Portal Éxito</title>
+
   <style>
     :root {
       --yellow: #ffd500;
@@ -14,144 +15,601 @@
       --light: #f7f7f7;
       --border: #e7e7e7;
     }
+
     * { box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       color: var(--black);
       background: #fff;
       font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
+      line-height: 1.7;
     }
-    .container { width: min(1000px, calc(100% - 36px)); margin: 0 auto; }
-    header { background: var(--yellow); border-bottom: 1px solid #e6c100; }
+
+    .container {
+      width: min(1100px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--yellow);
+      border-bottom: 1px solid #e6c100;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
     .nav {
-      min-height: 72px;
+      min-height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
     }
+
     .logo {
       color: var(--black);
       text-decoration: none;
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.2;
     }
+
     .logo span { color: var(--red); }
-    .nav a.button { background: var(--red); color: #fff; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav-links a:not(.button) {
+      color: var(--black);
+      font-size: .92rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .nav-links a:not(.button):hover {
+      color: var(--red);
+    }
+
     .button {
       display: inline-block;
-      padding: 11px 18px;
+      padding: 11px 19px;
       border-radius: 5px;
       text-decoration: none;
       font-size: .95rem;
       font-weight: 700;
       border: 1px solid transparent;
+      transition: transform .2s, opacity .2s;
     }
-    .button:hover { opacity: .9; }
-    .hero { padding: 68px 0 62px; background: var(--light); border-bottom: 1px solid var(--border); }
-    .hero h1 { max-width: 680px; margin: 0 0 16px; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; }
-    .hero p { max-width: 650px; margin: 0 0 24px; color: var(--gray); font-size: 1.05rem; }
-    .button.primary { background: var(--red); color: #fff; }
-    .button.secondary { background: #fff; color: var(--black); border-color: #ccc; margin-left: 8px; }
-    section { padding: 52px 0; }
-    .section-title { margin: 0 0 10px; font-size: 1.8rem; }
-    .section-intro { margin: 0 0 26px; color: var(--gray); max-width: 700px; }
-    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-    .card { border: 1px solid var(--border); border-radius: 8px; padding: 24px; background: #fff; }
-    .card h3 { margin: 0 0 10px; font-size: 1.25rem; }
-    .card p { margin: 0; color: var(--gray); }
-    .values { background: var(--light); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .value-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .value { padding: 18px; background: #fff; border: 1px solid var(--border); border-radius: 6px; }
-    .value h3 { margin: 0 0 6px; font-size: 1rem; }
-    .value p { margin: 0; color: var(--gray); font-size: .93rem; }
-    .final-cta { text-align: center; }
-    .final-cta p { color: var(--gray); margin: 0 auto 20px; max-width: 600px; }
-    footer { padding: 20px 0; background: #222; color: #fff; font-size: .9rem; }
-    .footer-inner { display: flex; justify-content: space-between; gap: 16px; }
-    footer p { margin: 0; color: #ccc; }
-    @media (max-width: 650px) {
-      .nav { min-height: 64px; }
-      .hero { padding: 48px 0; }
-      .cards, .value-list { grid-template-columns: 1fr; }
-      section { padding: 40px 0; }
-      .button.secondary { margin: 10px 0 0; }
-      .footer-inner { flex-direction: column; }
+
+    .button:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .button.dark {
+      background: var(--black);
+      color: #fff;
+    }
+
+    .button.secondary {
+      background: #fff;
+      color: var(--black);
+      border-color: #ccc;
+      margin-left: 8px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 88px 0 82px;
+      background: var(--light);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: var(--yellow);
+      opacity: .28;
+      right: -100px;
+      top: -110px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: var(--red);
+      opacity: .08;
+      right: 150px;
+      bottom: -90px;
+    }
+
+    .hero-content {
+      max-width: 780px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 6px 12px;
+      background: #fff1a3;
+      border-radius: 4px;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0 0 20px;
+      font-size: clamp(2.3rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 0 28px;
+      color: var(--gray);
+      font-size: 1.12rem;
+    }
+
+    section { padding: 66px 0; }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.7rem, 4vw, 2.3rem);
+      line-height: 1.2;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--gray);
+    }
+
+    .accent {
+      width: 54px;
+      height: 5px;
+      margin-bottom: 18px;
+      border-radius: 4px;
+      background: var(--red);
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .mission-card {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 5px 20px rgba(0,0,0,.035);
+    }
+
+    .card-label {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--red);
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .mission-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.5rem;
+    }
+
+    .mission-card p {
+      margin: 0;
+      color: var(--gray);
+    }
+
+    .objectives {
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .objective-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .objective {
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .objective-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background: var(--yellow);
+      font-weight: 800;
+    }
+
+    .objective h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .objective p {
+      margin: 0;
+      color: var(--gray);
+      font-size: .95rem;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .value {
+      padding: 24px;
+      border-left: 4px solid var(--yellow);
+      background: var(--light);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .value h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .value p {
+      margin: 0;
+      color: var(--gray);
+      font-size: .95rem;
+    }
+
+    .commitment {
+      background: var(--black);
+      color: #fff;
+    }
+
+    .commitment-inner {
+      max-width: 850px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .commitment .accent {
+      margin: 0 auto 20px;
+      background: var(--yellow);
+    }
+
+    .commitment h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+    }
+
+    .commitment p {
+      margin: 0;
+      color: #ddd;
+      font-size: 1.08rem;
+    }
+
+    .portal-cta { text-align: center; }
+
+    .portal-cta p {
+      max-width: 650px;
+      margin: 0 auto 25px;
+      color: var(--gray);
+    }
+
+    footer {
+      padding: 24px 0;
+      background: #171717;
+      color: #fff;
+      font-size: .9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    footer p {
+      margin: 0;
+      color: #ccc;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links { gap: 12px; }
+      .nav-links a:not(.button) { display: none; }
+      .objective-grid, .values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(100% - 28px, 1100px); }
+      .nav { min-height: 65px; }
+      .logo { font-size: 1rem; }
+      .nav .button { padding: 9px 11px; font-size: .83rem; }
+      .hero { padding: 58px 0; }
+      section { padding: 46px 0; }
+      .mission-grid, .objective-grid, .values-grid {
+        grid-template-columns: 1fr;
+      }
+      .mission-card { padding: 23px; }
+      .button.secondary {
+        margin: 10px 0 0;
+      }
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container nav">
-      <a class="logo" href="#">Portal <span>Éxito</span></a>
-      <!-- Cambia /portal/ por la URL de tu portal si está desplegado por separado. -->
-      <a class="button" style="background:#222;color:#fff" href="/portal.html">Entrar al portal</a>
+      <a class="logo" href="#inicio">
+        GRUPO <span>ÉXITO</span> S.A.
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#mision">Misión y visión</a>
+        <a href="#objetivos">Objetivos</a>
+        <a href="#valores">Valores</a>
+        <a class="button dark" href="/portal.html">Entrar al portal</a>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container">
-        <h1>Bienvenido al Portal Éxito</h1>
-        <p>Un espacio para consultar documentos, imágenes y recursos de manera sencilla y organizada. Encuentra la información que necesitas en un solo lugar.</p>
+    <section class="hero" id="inicio">
+      <div class="container hero-content">
+        <span class="eyebrow">Grupo Éxito S.A.</span>
+
+        <h1>¡Trabajamos para que el <span>cliente regrese!</span></h1>
+
+        <p>
+          Nuestro compromiso es ofrecer productos de calidad, experiencias
+          de compra agradables y soluciones que fortalezcan la confianza
+          y fidelidad de nuestros clientes.
+        </p>
+
         <a class="button primary" href="/portal.html">Entrar al portal</a>
-        <a class="button secondary" href="#mision">Conocer más</a>
+        <a class="button secondary" href="#mision">Conocer la organización</a>
       </div>
     </section>
 
     <section id="mision">
       <div class="container">
-        <h2 class="section-title">Misión y visión</h2>
-        <p class="section-intro">El portal busca facilitar la consulta y organización de la información para que los recursos sean más fáciles de encontrar y utilizar.</p>
-        <div class="cards">
-          <article class="card">
-            <h3>Misión</h3>
-            <p>Centralizar documentos, imágenes y recursos informativos en un espacio digital fácil de utilizar, que facilite el acceso y contribuya a una mejor organización de la información.</p>
+        <div class="section-heading">
+          <div class="accent"></div>
+          <h2>Nuestra misión y visión</h2>
+          <p>
+            Orientamos nuestro trabajo a la satisfacción de los clientes,
+            la competitividad y el desarrollo sostenible.
+          </p>
+        </div>
+
+        <div class="mission-grid">
+          <article class="mission-card">
+            <span class="card-label">Nuestro propósito</span>
+            <h3>Nuestra misión</h3>
+            <p>
+              Trabajamos para satisfacer las necesidades de nuestros
+              clientes, ofreciendo productos de calidad, precios competitivos
+              y experiencias de compra agradables que fortalezcan su
+              confianza y fidelidad.
+            </p>
           </article>
-          <article class="card">
-            <h3>Visión</h3>
-            <p>Consolidarse como un punto de consulta práctico y accesible, que permita encontrar la información de forma rápida y que pueda mejorar de acuerdo con las necesidades de sus usuarios.</p>
+
+          <article class="mission-card">
+            <span class="card-label">Hacia dónde vamos</span>
+            <h3>Nuestra visión</h3>
+            <p>
+              Ser una empresa líder y competitiva en el sector del comercio
+              minorista, reconocida por su innovación, la calidad de sus
+              servicios, el compromiso con sus clientes y su contribución
+              al desarrollo sostenible.
+            </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="values">
+    <section class="objectives" id="objetivos">
       <div class="container">
-        <h2 class="section-title">¿Qué ofrece el portal?</h2>
-        <p class="section-intro">Sus principales funciones están pensadas para mantener los recursos organizados y facilitar su consulta.</p>
-        <div class="value-list">
-          <article class="value">
-            <h3>Documentos</h3>
-            <p>Consulta archivos y documentos desde un mismo espacio.</p>
+        <div class="section-heading">
+          <div class="accent"></div>
+          <h2>Nuestros objetivos</h2>
+          <p>
+            Seis prioridades que orientan nuestras acciones y contribuyen
+            al crecimiento de la organización.
+          </p>
+        </div>
+
+        <div class="objective-grid">
+          <article class="objective">
+            <div class="objective-number">01</div>
+            <h3>Satisfacción del cliente</h3>
+            <p>
+              Brindar experiencias de compra positivas y una atención
+              de calidad.
+            </p>
           </article>
-          <article class="value">
-            <h3>Galería de imágenes</h3>
-            <p>Visualiza imágenes organizadas para encontrarlas con facilidad.</p>
+
+          <article class="objective">
+            <div class="objective-number">02</div>
+            <h3>Innovación</h3>
+            <p>
+              Implementar nuevas soluciones que mejoren los servicios
+              y procesos comerciales.
+            </p>
           </article>
-          <article class="value">
-            <h3>Categorías</h3>
-            <p>Clasifica los recursos y encuentra contenido de forma más ordenada.</p>
+
+          <article class="objective">
+            <div class="objective-number">03</div>
+            <h3>Excelencia operacional</h3>
+            <p>
+              Optimizar los recursos y garantizar procesos eficientes.
+            </p>
+          </article>
+
+          <article class="objective">
+            <div class="objective-number">04</div>
+            <h3>Desarrollo del talento humano</h3>
+            <p>
+              Promover el bienestar, la capacitación y el crecimiento
+              de los colaboradores.
+            </p>
+          </article>
+
+          <article class="objective">
+            <div class="objective-number">05</div>
+            <h3>Sostenibilidad</h3>
+            <p>
+              Contribuir al bienestar social, económico y ambiental
+              de las comunidades.
+            </p>
+          </article>
+
+          <article class="objective">
+            <div class="objective-number">06</div>
+            <h3>Crecimiento empresarial</h3>
+            <p>
+              Fortalecer la competitividad y el desarrollo de la organización.
+            </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="final-cta">
+    <section id="valores">
       <div class="container">
-        <h2 class="section-title">Ingresa al portal</h2>
-        <p>Accede a los documentos, imágenes y recursos disponibles.</p>
-        <a class="button primary" href="/portal.html">Entrar al portal</a>
+        <div class="section-heading">
+          <div class="accent"></div>
+          <h2>Nuestros valores</h2>
+          <p>
+            Principios que guían nuestra forma de trabajar y relacionarnos
+            con clientes, colaboradores y comunidades.
+          </p>
+        </div>
+
+        <div class="values-grid">
+          <article class="value">
+            <h3>Primero el cliente</h3>
+            <p>
+              Trabajamos para ofrecer experiencias satisfactorias
+              y generar confianza.
+            </p>
+          </article>
+
+          <article class="value">
+            <h3>Trabajo colaborativo</h3>
+            <p>
+              Fomentamos el trabajo en equipo y la cooperación para
+              alcanzar objetivos comunes.
+            </p>
+          </article>
+
+          <article class="value">
+            <h3>Innovación</h3>
+            <p>
+              Buscamos nuevas ideas y soluciones para mejorar continuamente.
+            </p>
+          </article>
+
+          <article class="value">
+            <h3>Consciencia social y ambiental</h3>
+            <p>
+              Actuamos responsablemente con las personas, las comunidades
+              y el medioambiente.
+            </p>
+          </article>
+
+          <article class="value">
+            <h3>Pasión por los resultados</h3>
+            <p>
+              Trabajamos con compromiso y entusiasmo para cumplir
+              nuestras metas.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="commitment" id="compromiso">
+      <div class="container commitment-inner">
+        <div class="accent"></div>
+        <h2>Nuestro compromiso</h2>
+        <p>
+          En Grupo Éxito creemos que el crecimiento empresarial va de la
+          mano con el bienestar de las personas, la satisfacción de nuestros
+          clientes y el desarrollo sostenible de la sociedad.
+        </p>
+      </div>
+    </section>
+
+    <section class="portal-cta">
+      <div class="container">
+        <div class="section-heading" style="margin-left:auto;margin-right:auto">
+          <div class="accent" style="margin-left:auto;margin-right:auto"></div>
+          <h2>Bienvenido al Portal Éxito</h2>
+          <p>
+            Consulta documentos, imágenes y recursos organizados en un
+            mismo espacio para facilitar el acceso a la información.
+          </p>
+        </div>
+
+        <a class="button primary" href="/portal.html">Ingresar al portal</a>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="container footer-inner">
-      <strong>Portal Éxito</strong>
-      <p>Información organizada en un solo lugar.</p>
+      <strong>GRUPO ÉXITO S.A.</strong>
+      <p>¡Trabajamos para que el cliente regrese!</p>
     </div>
   </footer>
 </body>
